@@ -15,17 +15,7 @@ public class Biblioteca {
         itens.remove(id);
     }
 
-    public int getTipo(int id){ // 1 é livro, 2 é artigo, default -1
-        if (getItem(id) instanceof Livro){
-            return 1;
-        } else if (getItem(id) instanceof Artigo){
-            return 2;
-        } else {
-            return -1;
-        }
-    }
-
-    public void update (int id, ItemBiblioteca novoItem){
+    public void updateItem (int id, ItemBiblioteca novoItem){
         if (itens.containsKey(id)) {
             itens.put(id, novoItem);
         }
