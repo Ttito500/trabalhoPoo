@@ -1,16 +1,16 @@
 public abstract class ItemBiblioteca {
-    protected int id = 0;
+    protected int id;
     protected int qtd;
     protected String titulo;
     protected int status; //se tiver emprestado, tem a data de emprestimo dentro. Se não, -1.
 
-    public ItemBiblioteca(int qtd, String titulo) {
+    public ItemBiblioteca(int qtd, String titulo, int id) {
         this.qtd = qtd;
         this.titulo = titulo;
+        this.id = id;
     }
 
     public int getId() {
-        id++;
         return id;
     }
 

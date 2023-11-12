@@ -1,23 +1,23 @@
 public class Artigo extends ItemBiblioteca {
-    protected int issn;
+    protected String doi;
 
-    public Artigo(int issn, int qtd, String titulo) {
-        super(qtd, titulo);
-        this.issn = issn;
+    public Artigo(String doi, int qtd, String titulo, int id) {
+        super(qtd, titulo, id);
+        this.doi = doi;
     }
 
-    public int getIssn() {
-        return issn;
+    public String getDoi() {
+        return doi;
     }
 
-    public void setIssn(int issn) {
-        this.issn = issn;
+    public void setDoi(int Doi) {
+        this.doi = doi;
     }
 
     @Override
     public String toString() {
         return "Artigo{" +
-                "issn=" + issn +
+                "doi=" + doi +
                 ", id=" + id +
                 ", titulo='" + titulo + '\'' +
                 '}';
