@@ -1,6 +1,7 @@
 public class Livro extends ItemBiblioteca {
     protected int isbn;
-
+    protected String genero;
+    protected String sinopse;
     public Livro(int isbn, int qtd, String titulo, int id) {
         super(qtd, titulo, id);
         this.isbn = isbn;

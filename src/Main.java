@@ -6,29 +6,31 @@ public class Main {
         int id = 0;
 
         while (true) {
+            System.out.println(" 1- Adcionar livro\n 2- Adicionar Artigo\n 3- Atualizar um item\n 4- Excluir um item\n 5- show\n 0- sair");
             String line = input();
-            println("$" + line);
             String[] args = line.split(" ");
-            if      (args[0].equals("end"))          { break; }
-            else if (args[0].equals("addLivro")){
+            if      (args[0].equals("0"))          { break; }
+            else if (args[0].equals("1")){
                 biblioteca.addItem(new Livro(Integer.parseInt(args[1]), Integer.parseInt(args[2]), getTitulo(3, args), id));
                 id++;
             }
-            else if (args[0].equals("addArtigo")){
-                biblioteca.addItem(new Artigo(args[1], Integer.parseInt(args[2]), getTitulo(3, args), id));
+            else if (args[0].equals("2")){
+                biblioteca.addItem(artigo(id));
                 id++;
             }
-            else if (args[0].equals("update")){
-                if (biblioteca.getItem(Integer.parseInt(args[1])) instanceof Livro){
+            else if (args[0].equals("3")){
+                int idUpdate;
+                System.out.print("id do item a mudar: ");
+                idUpdate = Integer.parseInt(input());
+                if (biblioteca.getItem(idUpdate) instanceof Livro){
                     //biblioteca.addItem(new Livro(Integer.parseInt(args[1]), Integer.parseInt(args[2]), getTitulo(3, args), id));
                     biblioteca.updateItem(Integer.parseInt(args[1]), new Livro(Integer.parseInt(args[2]), Integer.parseInt(args[3]), getTitulo(4, args), Integer.parseInt(args[1])));
-                } else if (biblioteca.getItem(Integer.parseInt(args[1])) instanceof Artigo){
-                    //biblioteca.addItem(new Artigo(args[1], Integer.parseInt(args[2]), getTitulo(3, args), id));
-                    biblioteca.updateItem(Integer.parseInt(args[1]), new Artigo(args[2], Integer.parseInt(args[3]), getTitulo(4, args), Integer.parseInt(args[1])));
+                } else if (biblioteca.getItem(idUpdate) instanceof Artigo){
+                    biblioteca.updateItem(Integer.parseInt(input()), artigo(Integer.parseInt(input())));
                 }
             }
-            else if (args[0].equals("delete"))       { biblioteca.deleteItem(Integer.parseInt(args[1])); }
-            else if (args[0].equals("show"))         { System.out.println(biblioteca); }
+            else if (args[0].equals("4"))       { biblioteca.deleteItem(Integer.parseInt(args[1])); }
+            else if (args[0].equals("5"))         { System.out.println(biblioteca); }
             else                                     { println("fail: comando invalido"); }
         }
     }
@@ -40,6 +42,20 @@ public class Main {
             if (i != args.length - 1){titulo.append(" ");}
         }
         return titulo.toString();
+    }
+
+    private static Artigo artigo(int id){
+        String doi;
+        int qtd;
+        String titulo;
+        System.out.print("*DOI: ");
+        doi = input();
+        System.out.print("quantidade: ");
+        qtd = Integer.parseInt(input());
+        System.out.print("Titulo: ");
+        titulo = input();
+        System.out.println("artigo adicionado.");
+        return new Artigo(doi, qtd, titulo, id);
     }
     private static Scanner scanner = new Scanner(System.in);
     private static String  input()                { return scanner.nextLine();        }
