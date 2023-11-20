@@ -11,7 +11,7 @@ public class Main {
             String[] args = line.split(" ");
             if      (args[0].equals("0"))          { break; }
             else if (args[0].equals("1")){
-                biblioteca.addItem(new Livro(Integer.parseInt(args[1]), Integer.parseInt(args[2]), getTitulo(3, args), id));
+                biblioteca.addItem(livro(id));
                 id++;
             }
             else if (args[0].equals("2")){
@@ -22,14 +22,7 @@ public class Main {
                 int idUpdate;
                 System.out.print("id do item a mudar: ");
                 idUpdate = Integer.parseInt(input());
-                /*
-                if (biblioteca.getItem(idUpdate) instanceof Livro){
-                    //biblioteca.addItem(new Livro(Integer.parseInt(args[1]), Integer.parseInt(args[2]), getTitulo(3, args), id));
-                    biblioteca.updateItem(Integer.parseInt(args[1]), new Livro(Integer.parseInt(args[2]), Integer.parseInt(args[3]), getTitulo(4, args), Integer.parseInt(args[1])));
-                } else if (biblioteca.getItem(idUpdate) instanceof Artigo){
-                    biblioteca.updateItem(Integer.parseInt(input()), artigo(Integer.parseInt(input())));
-                }
-                 */
+                biblioteca.updateItem(artigo(idUpdate));
             }
             else if (args[0].equals("4"))       { biblioteca.deleteItem(Integer.parseInt(args[1])); }
             else if (args[0].equals("5"))         { System.out.println(biblioteca); }
@@ -56,12 +49,23 @@ public class Main {
         qtd = Integer.parseInt(input());
         System.out.print("Titulo: ");
         titulo = input();
-        System.out.println("artigo adicionado.");
         return new Artigo(doi, qtd, titulo, id);
+    }
+    private static Livro livro(int id){
+        int isbn;
+        int qtd;
+        String titulo;
+        System.out.print("*isbn: ");
+        isbn = number(input());
+        System.out.print("quantidade: ");
+        qtd = Integer.parseInt(input());
+        System.out.print("Titulo: ");
+        titulo = input();
+        return new Livro(isbn, qtd, titulo, id);
     }
     private static Scanner scanner = new Scanner(System.in);
     private static String  input()                { return scanner.nextLine();        }
-    private static double  number(String value)   { return Double.parseDouble(value); }
+    private static int  number(String value)   { return Integer.parseInt(value); }
     public  static void    println(Object value)  { System.out.println(value);        }
     public  static void    print(Object value)    { System.out.print(value);          }
 }

@@ -15,15 +15,21 @@ public class Biblioteca {
         itens.remove(id);
     }
 
-    public void updateItem (int id, String doi, int qtd, String titulo){
-        if (itens.containsKey(id)) {
-            if (getItem(id) instanceof Artigo){
-                
-                if (doi != null) {
-                    ((Artigo) getItem(id)).setDoi(doi);
-                } if (qtd != 0){
-                    getItem(id).setQtd(qtd);
-                }
+    public void updateItem(Artigo newItem) {
+        if (itens.containsKey(newItem.getId())) {
+            ItemBiblioteca item = getItem(newItem.getId());
+            if (item instanceof Artigo) {
+                Artigo artigo = (Artigo) item;
+
+                artigo.setDoi(newItem.getDoi());
+                artigo.setQtd(newItem.getQtd());
+                artigo.setTitulo(newItem.getTitulo());
+            } else if (item instanceof Livro) {
+                Livro livro = (Livro) item;
+
+                livro.setIsbn(newItem.getIsbn());
+                livro.setQtd(newItem.getQtd());
+                livro.setTitulo(newItem.getTitulo());
             }
         }
     }
