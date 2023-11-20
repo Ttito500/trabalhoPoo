@@ -15,9 +15,16 @@ public class Biblioteca {
         itens.remove(id);
     }
 
-    public void updateItem (int id, ItemBiblioteca novoItem){
+    public void updateItem (int id, String doi, int qtd, String titulo){
         if (itens.containsKey(id)) {
-            itens.put(id, novoItem);
+            if (getItem(id) instanceof Artigo){
+                
+                if (doi != null) {
+                    ((Artigo) getItem(id)).setDoi(doi);
+                } if (qtd != 0){
+                    getItem(id).setQtd(qtd);
+                }
+            }
         }
     }
 
