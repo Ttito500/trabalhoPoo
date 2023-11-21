@@ -14,6 +14,8 @@ public class Biblioteca {
     public void deleteItem(int id){
         if (itens.containsKey(id)) {
             itens.remove(id);
+        } else {
+            throw new MsgException("fail: item não encontrado");
         }
     }
 
@@ -35,6 +37,8 @@ public class Biblioteca {
                 livro.setQtd(newLivro.getQtd());
                 livro.setTitulo(newLivro.getTitulo());
             }
+        } else {
+            throw new MsgException("fail: item não encontrdo");
         }
     }
 
