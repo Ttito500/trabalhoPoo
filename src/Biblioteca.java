@@ -12,7 +12,9 @@ public class Biblioteca {
     }
 
     public void deleteItem(int id){
-        itens.remove(id);
+        if (itens.containsKey(id)) {
+            itens.remove(id);
+        }
     }
 
     public void updateItem(ItemBiblioteca newItem) {

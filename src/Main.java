@@ -21,26 +21,20 @@ public class Main {
             else if (args[0].equals("3")){
                 int idUpdate;
                 System.out.print("id do item a mudar: ");
-                idUpdate = Integer.parseInt(input());
+                idUpdate = number(input());
                 if (biblioteca.getItem(idUpdate) instanceof Artigo) {
                     biblioteca.updateItem(artigo(idUpdate));
                 } else if (biblioteca.getItem(idUpdate) instanceof Livro) {
                     biblioteca.updateItem(livro(idUpdate));
                 }
             }
-            else if (args[0].equals("4"))       { biblioteca.deleteItem(Integer.parseInt(args[1])); }
+            else if (args[0].equals("4"))       {
+                System.out.print("id do item a mudar: ");
+                biblioteca.deleteItem(number(input()));
+            }
             else if (args[0].equals("5"))         { System.out.println(biblioteca); }
             else                                     { println("fail: comando invalido"); }
         }
-    }
-
-    private static String getTitulo(int i, String[] args){ // retorna o titulo, que começa a partir de i e vai ate o final de args
-        StringBuilder titulo = new StringBuilder();
-        for (; i < args.length; i++){
-            titulo.append(args[i]);
-            if (i != args.length - 1){titulo.append(" ");}
-        }
-        return titulo.toString();
     }
 
     private static Artigo artigo(int id){
@@ -50,7 +44,7 @@ public class Main {
         System.out.print("*DOI: ");
         doi = input();
         System.out.print("quantidade: ");
-        qtd = Integer.parseInt(input());
+        qtd = number(input());
         System.out.print("Titulo: ");
         titulo = input();
         return new Artigo(doi, qtd, titulo, id);
@@ -62,7 +56,7 @@ public class Main {
         System.out.print("*isbn: ");
         isbn = number(input());
         System.out.print("quantidade: ");
-        qtd = Integer.parseInt(input());
+        qtd = number(input());
         System.out.print("Titulo: ");
         titulo = input();
         return new Livro(isbn, qtd, titulo, id);
