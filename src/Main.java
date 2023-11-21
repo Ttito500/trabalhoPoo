@@ -22,7 +22,11 @@ public class Main {
                 int idUpdate;
                 System.out.print("id do item a mudar: ");
                 idUpdate = Integer.parseInt(input());
-                biblioteca.updateItem(artigo(idUpdate));
+                if (biblioteca.getItem(idUpdate) instanceof Artigo) {
+                    biblioteca.updateItem(artigo(idUpdate));
+                } else if (biblioteca.getItem(idUpdate) instanceof Livro) {
+                    biblioteca.updateItem(livro(idUpdate));
+                }
             }
             else if (args[0].equals("4"))       { biblioteca.deleteItem(Integer.parseInt(args[1])); }
             else if (args[0].equals("5"))         { System.out.println(biblioteca); }
