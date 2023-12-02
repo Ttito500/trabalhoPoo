@@ -1,4 +1,6 @@
-public class Livro extends ItemBiblioteca {
+import java.io.Serializable;
+
+public class Livro extends ItemBiblioteca implements Serializable {
     protected int isbn;
     protected String genero;
     protected String sinopse;

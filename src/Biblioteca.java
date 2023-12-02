@@ -1,7 +1,10 @@
+import java.io.Serializable;
 import java.util.*;
 
-public class Biblioteca {
+public class Biblioteca implements Serializable {
     private Map<Integer, ItemBiblioteca> itens = new TreeMap<>();
+
+    private Map<Integer, UsuarioBiblioteca> usuarios = new TreeMap<>();
 
     public void addItem(ItemBiblioteca item){
         itens.put(item.getId(), item);
@@ -42,12 +45,25 @@ public class Biblioteca {
         }
     }
 
+    public void emprestar(int idUsuario, ItemBiblioteca item){
+        item.setStatus(Status.EMPRESTADO);
+        usuarios.get(idUsuario).setEmprestimos(item);
+    }
+
+    public void devolver(int idUsuario, ItemBiblioteca item){
+        
+    }
+
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder("Biblioteca Contents:\n");
 
         for (ItemBiblioteca item : itens.values()) {
             result.append(item.toString()).append("\n");
+        }
+
+        for (UsuarioBiblioteca usuario : usuarios.values()) {
+            result.append(usuario.toString()).append("\n");
         }
 
         return result.toString();

@@ -1,15 +1,16 @@
-public abstract class ItemBiblioteca {
+import java.io.Serializable;
+
+public abstract class ItemBiblioteca implements Serializable {
     protected int id;
     protected int qtd;
     protected String titulo;
-    //protected String autores;
-    protected int status; //se tiver emprestado, tem a data de emprestimo dentro. Se não, -1.
+    protected Status status; //se tiver emprestado, tem a data de emprestimo dentro. Se não, -1.
 
     public ItemBiblioteca(int qtd, String titulo, int id/*, String autores*/) {
         this.qtd = qtd;
         this.titulo = titulo;
         this.id = id;
-        //this.autores = autores;
+        this.status = Status.DISPONIVEL;
     }
 
     public int getId() {
@@ -24,7 +25,7 @@ public abstract class ItemBiblioteca {
         return titulo;
     }
 
-    public int getStatus() {
+    public Status getStatus() {
         return status;
     }
 
@@ -36,7 +37,7 @@ public abstract class ItemBiblioteca {
         this.titulo = titulo;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Status status) {////
         this.status = status;
     }
 }

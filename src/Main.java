@@ -1,8 +1,12 @@
+import java.io.*;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] arg) {
-        Biblioteca biblioteca = new Biblioteca();
+        Biblioteca biblioteca = loadData(); // carrega os dados se existirem
+        if (biblioteca == null) {
+            biblioteca = new Biblioteca();
+        }
         int id = 0;
 
         while (true) {
@@ -11,6 +15,7 @@ public class Main {
                 String line = input();
                 String[] args = line.split(" ");
                 if (args[0].equals("0")) {
+                    saveData(biblioteca);
                     break;
                 } else if (args[0].equals("1")) {
                     biblioteca.addItem(livro(id));
@@ -70,4 +75,24 @@ public class Main {
     private static int  number(String value)   { return Integer.parseInt(value); }
     public  static void    println(Object value)  { System.out.println(value);        }
     public  static void    print(Object value)    { System.out.print(value);          }
+
+    private static void saveData(Biblioteca biblioteca) {
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("library_data.txt"))) {
+            outputStream.writeObject(biblioteca);
+            System.out.println("Data saved successfully!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static Biblioteca loadData() {
+        Biblioteca biblioteca = null;
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("library_data.txt"))) {
+            biblioteca = (Biblioteca) inputStream.readObject();
+            System.out.println("Data loaded successfully!");
+        } catch (IOException | ClassNotFoundException e) {
+            // erro arquivo n pode ser lido
+        }
+        return biblioteca;
+    }
 }

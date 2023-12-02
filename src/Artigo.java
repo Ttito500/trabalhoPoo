@@ -1,4 +1,6 @@
-public class Artigo extends ItemBiblioteca {
+import java.io.Serializable;
+
+public class Artigo extends ItemBiblioteca implements Serializable {
     protected String doi;
 
 
