@@ -9,25 +9,23 @@ public class Main {
         }
         int keyItem = 0;
         int keyUsuario = 0;
-
-        while (true) {
-            try {
-                System.out.println(" 1- Adcionar livro\n 2- Adicionar Artigo\n 3- Atualizar um item\n 4- Excluir um item\n 5- show\n 0- sair");
+        int menu = 0;
+        boolean loop = true;
+        while (loop) {
+            while (menu == 0 && loop) {
+                System.out.println("MENU ITENS\n\n 1- Adcionar livro\n 2- Adicionar Artigo\n 3- Atualizar um item\n 4- Excluir um item\n 5- show\n 5- Menu usuários\n 0- sair");
                 String line = input();
                 String[] args = line.split(" ");
                 if (args[0].equals("0")) {
                     saveData(biblioteca);
-                    break;
+                    loop = false;
                 } else if (args[0].equals("1")) {
                     biblioteca.addItem(livro(keyItem));
                     keyItem++;
-                }else if (args[0].equals("2")) {
-                    biblioteca.addUsuario(usuario(keyUsuario));
-                    keyUsuario++;
-                } else if (args[0].equals("3")) {
+                } else if (args[0].equals("2")) {
                     biblioteca.addItem(artigo(keyItem));
                     keyItem++;
-                } else if (args[0].equals("4")) {
+                } else if (args[0].equals("3")) {
                     int idUpdate;
                     System.out.print("id do item a mudar: ");
                     idUpdate = number(input());
@@ -36,28 +34,46 @@ public class Main {
                     } else if (biblioteca.getItem(idUpdate) instanceof Livro) {
                         biblioteca.updateItem(livro(idUpdate));
                     }
-                } else if (args[0].equals("5")) {
-                    System.out.print("id do item a mudar: ");
+                } else if (args[0].equals("4")) {
+                    System.out.print("id do item para remover: ");
                     biblioteca.deleteItem(number(input()));
-                }else if (args[0].equals("6")) {
+                } else if (args[0].equals("5")) {
+                    System.out.println(biblioteca.showItens());
+                } else if (args[0].equals("6")) {
+                    menu++;
+                } else {
+                    println("fail: comando invalido");
+                }
+            }
+            while (menu == 1 && loop) {
+                System.out.println("MENU USUÁRIOS\n\n 1- Adcionar usuario\n 2- Emprestar item\n 3- Devolver item\n 4- show\n 5- Menu itens\n 0- sair");
+                String line = input();
+                String[] args = line.split(" ");
+                if (args[0].equals("0")) {
+                    saveData(biblioteca);
+                    loop = false;
+                }else if (args[0].equals("1")) {
+                    biblioteca.addUsuario(usuario(keyUsuario));
+                    keyUsuario++;
+                } else if (args[0].equals("2")) {
                     System.out.print("id do usuário: ");
                     int idUsuario = number(input());
                     System.out.println("id do item: ");
                     int idItem = number(input());
                     biblioteca.emprestar(idUsuario, idItem);
-                }else if (args[0].equals("7")) {
+                } else if (args[0].equals("3")) {
                     System.out.print("id do usuário: ");
                     int idUsuario = number(input());
                     System.out.println("id do item: ");
                     int idItem = number(input());
                     biblioteca.devolver(idUsuario, idItem);
-                } else if (args[0].equals("8")) {
-                    System.out.println(biblioteca);
+                } else if (args[0].equals("4")) {
+                    System.out.println(biblioteca.showUsuarios());
+                } else if (args[0].equals("5")) {
+                    menu--;
                 } else {
                     println("fail: comando invalido");
                 }
-            } catch (MsgException m){
-                System.out.println(m.getMessage());
             }
         }
     }

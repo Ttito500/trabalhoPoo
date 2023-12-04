@@ -69,13 +69,18 @@ public class Biblioteca implements Serializable {
         for (ItemBiblioteca item : )
     }
 */
-    @Override
-    public String toString() {
+    public String showItens() {
         StringBuilder result = new StringBuilder("Biblioteca Contents:\n");
 
         for (ItemBiblioteca item : itens.values()) {
             result.append(item.toString()).append("\n");
         }
+
+        return result.toString();
+    }
+
+    public String showUsuarios(){
+        StringBuilder result = new StringBuilder("Biblioteca Contents:\n");
 
         for (UsuarioBiblioteca usuario : usuarios.values()) {
             result.append(usuario.toString()).append("\n");
