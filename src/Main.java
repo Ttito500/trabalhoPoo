@@ -7,7 +7,8 @@ public class Main {
         if (biblioteca == null) {
             biblioteca = new Biblioteca();
         }
-        int id = 0;
+        int keyItem = 0;
+        int keyUsuario = 0;
 
         while (true) {
             try {
@@ -18,12 +19,15 @@ public class Main {
                     saveData(biblioteca);
                     break;
                 } else if (args[0].equals("1")) {
-                    biblioteca.addItem(livro(id));
-                    id++;
-                } else if (args[0].equals("2")) {
-                    biblioteca.addItem(artigo(id));
-                    id++;
+                    biblioteca.addItem(livro(keyItem));
+                    keyItem++;
+                }else if (args[0].equals("2")) {
+                    biblioteca.addUsuario(usuario(keyUsuario));
+                    keyUsuario++;
                 } else if (args[0].equals("3")) {
+                    biblioteca.addItem(artigo(keyItem));
+                    keyItem++;
+                } else if (args[0].equals("4")) {
                     int idUpdate;
                     System.out.print("id do item a mudar: ");
                     idUpdate = number(input());
@@ -32,10 +36,22 @@ public class Main {
                     } else if (biblioteca.getItem(idUpdate) instanceof Livro) {
                         biblioteca.updateItem(livro(idUpdate));
                     }
-                } else if (args[0].equals("4")) {
+                } else if (args[0].equals("5")) {
                     System.out.print("id do item a mudar: ");
                     biblioteca.deleteItem(number(input()));
-                } else if (args[0].equals("5")) {
+                }else if (args[0].equals("6")) {
+                    System.out.print("id do usuário: ");
+                    int idUsuario = number(input());
+                    System.out.println("id do item: ");
+                    int idItem = number(input());
+                    biblioteca.emprestar(idUsuario, idItem);
+                }else if (args[0].equals("7")) {
+                    System.out.print("id do usuário: ");
+                    int idUsuario = number(input());
+                    System.out.println("id do item: ");
+                    int idItem = number(input());
+                    biblioteca.devolver(idUsuario, idItem);
+                } else if (args[0].equals("8")) {
                     System.out.println(biblioteca);
                 } else {
                     println("fail: comando invalido");
@@ -50,11 +66,11 @@ public class Main {
         String doi;
         int qtd;
         String titulo;
-        System.out.print("*DOI: ");
+        System.out.print("DOI: ");
         doi = input();
         System.out.print("quantidade: ");
         qtd = number(input());
-        System.out.print("Titulo: ");
+        System.out.print("titulo: ");
         titulo = input();
         return new Artigo(doi, qtd, titulo, id);
     }
@@ -62,13 +78,20 @@ public class Main {
         int isbn;
         int qtd;
         String titulo;
-        System.out.print("*isbn: ");
+        System.out.print("isbn: ");
         isbn = number(input());
         System.out.print("quantidade: ");
         qtd = number(input());
-        System.out.print("Titulo: ");
+        System.out.print("titulo: ");
         titulo = input();
         return new Livro(isbn, qtd, titulo, id);
+    }
+
+    public static UsuarioBiblioteca usuario(int id){
+        String nome;
+        System.out.println("nome: ");
+        nome = input();
+        return new UsuarioBiblioteca(nome, id);
     }
     private static Scanner scanner = new Scanner(System.in);
     private static String  input()                { return scanner.nextLine();        }
@@ -77,9 +100,9 @@ public class Main {
     public  static void    print(Object value)    { System.out.print(value);          }
 
     private static void saveData(Biblioteca biblioteca) {
-        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("library_data.txt"))) {
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("DadosBiblioteca.txt"))) {
             outputStream.writeObject(biblioteca);
-            System.out.println("Data saved successfully!");
+            System.out.println("dados salvos");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -87,9 +110,9 @@ public class Main {
 
     private static Biblioteca loadData() {
         Biblioteca biblioteca = null;
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("library_data.txt"))) {
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("DadosBiblioteca.txt"))) {
             biblioteca = (Biblioteca) inputStream.readObject();
-            System.out.println("Data loaded successfully!");
+            System.out.println("dados carregados");
         } catch (IOException | ClassNotFoundException e) {
             // erro arquivo n pode ser lido
         }

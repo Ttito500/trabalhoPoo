@@ -1,5 +1,6 @@
 import java.io.Serializable;
 import java.util.*;
+import java.time.LocalDate;
 
 public class Biblioteca implements Serializable {
     private Map<Integer, ItemBiblioteca> itens = new TreeMap<>();
@@ -45,15 +46,29 @@ public class Biblioteca implements Serializable {
         }
     }
 
-    public void emprestar(int idUsuario, ItemBiblioteca item){
+    public void addUsuario(UsuarioBiblioteca usuario){
+        usuarios.put(usuario.getIdUsuario(), usuario);
+    }
+
+
+    public void emprestar(int idUsuario, int idItem){
+        ItemBiblioteca item = itens.get(idItem);
         item.setStatus(Status.EMPRESTADO);
+        item.setDataEmprestimo(System.currentTimeMillis());
         usuarios.get(idUsuario).setEmprestimos(item);
     }
 
-    public void devolver(int idUsuario, ItemBiblioteca item){
-        
+    public void devolver(int idUsuario, int idItem){
+        ItemBiblioteca item = itens.get(idItem);
+        item.setStatus(Status.DISPONIVEL);
+        usuarios.get(idUsuario).getEmprestimos().remove(item);
     }
-
+/*
+    public float checkUsuario(int idUsuario){
+        UsuarioBiblioteca usuarioBiblioteca = usuarios.get(idUsuario);
+        for (ItemBiblioteca item : )
+    }
+*/
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder("Biblioteca Contents:\n");

@@ -4,9 +4,10 @@ public abstract class ItemBiblioteca implements Serializable {
     protected int id;
     protected int qtd;
     protected String titulo;
-    protected Status status; //se tiver emprestado, tem a data de emprestimo dentro. Se não, -1.
+    protected Status status;
+    protected long dataEmprestimo;
 
-    public ItemBiblioteca(int qtd, String titulo, int id/*, String autores*/) {
+    public ItemBiblioteca(int qtd, String titulo, int id) {
         this.qtd = qtd;
         this.titulo = titulo;
         this.id = id;
@@ -29,6 +30,10 @@ public abstract class ItemBiblioteca implements Serializable {
         return status;
     }
 
+    public long getDataEmprestimo() {
+        return dataEmprestimo;
+    }
+
     public void setQtd(int qtd) {
         this.qtd = qtd;
     }
@@ -39,5 +44,9 @@ public abstract class ItemBiblioteca implements Serializable {
 
     public void setStatus(Status status) {////
         this.status = status;
+    }
+
+    public void setDataEmprestimo(long dataEmprestimo) {
+        this.dataEmprestimo = dataEmprestimo;
     }
 }

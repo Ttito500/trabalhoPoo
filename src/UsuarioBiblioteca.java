@@ -30,6 +30,10 @@ public class UsuarioBiblioteca implements Serializable {
         this.emprestimos.put(item.getId(), item);
     }
 
+    public Map<Integer, ItemBiblioteca> getEmprestimos() {
+        return emprestimos;
+    }
+
     @Override
     public String toString() {
         return "UsuarioBiblioteca{" +
