@@ -4,14 +4,16 @@ public abstract class ItemBiblioteca implements Serializable {
     protected int id;
     protected int qtd;
     protected String titulo;
-    protected Status status;
     protected long dataEmprestimo;
+    protected int qtdDisponiveis, qtdEmpretados, qtdAtrasados;
 
     public ItemBiblioteca(int qtd, String titulo, int id) {
         this.qtd = qtd;
         this.titulo = titulo;
         this.id = id;
-        this.status = Status.DISPONIVEL;
+        this.qtdDisponiveis = qtd;
+        this.qtdAtrasados = 0;
+        this.qtdEmpretados = 0;
     }
 
     public int getId() {
@@ -26,12 +28,20 @@ public abstract class ItemBiblioteca implements Serializable {
         return titulo;
     }
 
-    public Status getStatus() {
-        return status;
-    }
-
     public long getDataEmprestimo() {
         return dataEmprestimo;
+    }
+
+    public int getQtdDisponiveis() {
+        return qtdDisponiveis;
+    }
+
+    public int getQtdEmpretados() {
+        return qtdEmpretados;
+    }
+
+    public int getQtdAtrasados() {
+        return qtdAtrasados;
     }
 
     public void setQtd(int qtd) {
@@ -42,11 +52,19 @@ public abstract class ItemBiblioteca implements Serializable {
         this.titulo = titulo;
     }
 
-    public void setStatus(Status status) {////
-        this.status = status;
-    }
-
     public void setDataEmprestimo(long dataEmprestimo) {
         this.dataEmprestimo = dataEmprestimo;
+    }
+
+    public void setQtdDisponiveis(int qtdDisponiveis) {
+        this.qtdDisponiveis = qtdDisponiveis;
+    }
+
+    public void setQtdEmpretados(int qtdEmpretados) {
+        this.qtdEmpretados = qtdEmpretados;
+    }
+
+    public void setQtdAtrasados(int qtdAtrasados) {
+        this.qtdAtrasados = qtdAtrasados;
     }
 }

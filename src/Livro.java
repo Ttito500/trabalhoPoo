@@ -20,9 +20,13 @@ public class Livro extends ItemBiblioteca implements Serializable {
     @Override
     public String toString() {
         return "Livro{" +
-                "isbn=" + isbn +
-                ", id=" + id +
+                "id=" + id +
+                ", qtd=" + qtd +
                 ", titulo='" + titulo + '\'' +
+                ", dataEmprestimo=" + dataEmprestimo +
+                ", qtdDisponiveis=" + qtdDisponiveis +
+                ", qtdEmpretados=" + qtdEmpretados +
+                ", qtdAtrasados=" + qtdAtrasados +
                 '}';
     }
 }

@@ -19,9 +19,13 @@ public class Artigo extends ItemBiblioteca implements Serializable {
     @Override
     public String toString() {
         return "Artigo{" +
-                "doi=" + doi +
-                ", id=" + id +
+                "id=" + id +
+                ", qtd=" + qtd +
                 ", titulo='" + titulo + '\'' +
+                ", dataEmprestimo=" + dataEmprestimo +
+                ", qtdDisponiveis=" + qtdDisponiveis +
+                ", qtdEmpretados=" + qtdEmpretados +
+                ", qtdAtrasados=" + qtdAtrasados +
                 '}';
     }
 }

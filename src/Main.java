@@ -13,7 +13,7 @@ public class Main {
         boolean loop = true;
         while (loop) {
             while (menu == 0 && loop) {
-                System.out.println("MENU ITENS\n\n 1- Adcionar livro\n 2- Adicionar Artigo\n 3- Atualizar um item\n 4- Excluir um item\n 5- show\n 5- Menu usuários\n 0- sair");
+                System.out.println("MENU ITENS\n\n 1- Adcionar livro\n 2- Adicionar Artigo\n 3- Atualizar um item\n 4- Excluir um item\n 5- show\n 6- Menu usuários\n 0- sair");
                 String line = input();
                 String[] args = line.split(" ");
                 if (args[0].equals("0")) {

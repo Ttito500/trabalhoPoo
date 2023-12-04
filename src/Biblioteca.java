@@ -53,15 +53,41 @@ public class Biblioteca implements Serializable {
 
     public void emprestar(int idUsuario, int idItem){
         ItemBiblioteca item = itens.get(idItem);
-        item.setStatus(Status.EMPRESTADO);
-        item.setDataEmprestimo(System.currentTimeMillis());
-        usuarios.get(idUsuario).setEmprestimos(item);
+        UsuarioBiblioteca usuario = usuarios.get(idUsuario);
+
+        //if (usuario != null) {
+            if (item != null) {
+                if (item.getQtdDisponiveis() > 0) {
+                    item.setQtdEmpretados(item.getQtdEmpretados() + 1);
+                    item.setQtdDisponiveis(item.getQtdDisponiveis() - 1);
+                    item.setDataEmprestimo(System.currentTimeMillis());
+                    usuario.setEmprestimos(item);
+                } else {
+                    throw new MsgException("fail: item não disponível");
+                }
+            } else {
+                throw new MsgException("fail: item não encontrado");
+            }
+        /*} else {
+            throw new MsgException("fail: usuario não encontrado");
+        }*/
     }
 
     public void devolver(int idUsuario, int idItem){
         ItemBiblioteca item = itens.get(idItem);
-        item.setStatus(Status.DISPONIVEL);
-        usuarios.get(idUsuario).getEmprestimos().remove(item);
+        UsuarioBiblioteca usuario = usuarios.get(idUsuario);
+
+        if (usuario != null) {
+            if (item != null) {
+                item.setQtdEmpretados(item.getQtdEmpretados() - 1);
+                item.setQtdDisponiveis(item.getQtdDisponiveis() + 1);
+                usuario.getEmprestimos().remove(item.getId());
+            } else {
+                throw new MsgException("fail: item não encontrado");
+            }
+        } else {
+            throw new MsgException("fail: usuario não encontrado");
+        }
     }
 /*
     public float checkUsuario(int idUsuario){
