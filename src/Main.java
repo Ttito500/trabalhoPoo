@@ -30,13 +30,25 @@ public class Main {
                     System.out.print("id do item a mudar: ");
                     idUpdate = number(input());
                     if (biblioteca.getItem(idUpdate) instanceof Artigo) {
-                        biblioteca.updateItem(artigo(idUpdate));
+                        try {
+                            biblioteca.updateItem(artigo(idUpdate));
+                        } catch (Exception e) {
+                            System.out.println(e.toString());;
+                        }
                     } else if (biblioteca.getItem(idUpdate) instanceof Livro) {
-                        biblioteca.updateItem(livro(idUpdate));
+                        try {
+                            biblioteca.updateItem(livro(idUpdate));
+                        } catch (Exception e) {
+                            System.out.println(e.toString());;
+                        }
                     }
                 } else if (args[0].equals("4")) {
                     System.out.print("id do item para remover: ");
-                    biblioteca.deleteItem(number(input()));
+                    try {
+                        biblioteca.deleteItem(number(input()));
+                    } catch (Exception e) {
+                        System.out.println(e.toString());
+                    }
                 } else if (args[0].equals("5")) {
                     System.out.println(biblioteca.showItens());
                 } else if (args[0].equals("6")) {
@@ -60,17 +72,29 @@ public class Main {
                     int idUsuario = number(input());
                     System.out.print("id do item: ");
                     int idItem = number(input());
-                    biblioteca.emprestar(idUsuario, idItem);
+                    try {
+                        biblioteca.emprestar(idUsuario, idItem);
+                    } catch (Exception e) {
+                        System.out.println(e.toString());
+                    }
                 } else if (args[0].equals("3")) {
                     System.out.print("id do usuário: ");
                     int idUsuario = number(input());
                     System.out.print("id do item: ");
                     int idItem = number(input());
-                    biblioteca.devolver(idUsuario, idItem);
+                    try {
+                        biblioteca.devolver(idUsuario, idItem);
+                    } catch (Exception e) {
+                        System.out.println(e.toString());
+                    }
                 } else if (args[0].equals("4")) {
                     System.out.print("id do usuário: ");
                     int idUsuario = number(input());
-                    System.out.println(biblioteca.pagarDivida(idUsuario));
+                    try {
+                        System.out.println(biblioteca.pagarDivida(idUsuario));
+                    } catch (Exception e) {
+                        System.out.println(e.toString());
+                    }
                 }else if (args[0].equals("5")) {
                     System.out.println(biblioteca.showUsuarios());
                 } else if (args[0].equals("6")) {

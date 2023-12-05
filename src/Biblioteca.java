@@ -14,7 +14,7 @@ public class Biblioteca implements Serializable {
         return itens.get(id);
     }
 
-    public void deleteItem(int id){
+    public void deleteItem(int id) throws Exception{
         if (itens.containsKey(id)) {
             itens.remove(id);
         } else {
@@ -22,7 +22,7 @@ public class Biblioteca implements Serializable {
         }
     }
 
-    public void updateItem(ItemBiblioteca newItem) {
+    public void updateItem(ItemBiblioteca newItem) throws Exception{
         if (itens.containsKey(newItem.getId())) {
             ItemBiblioteca item = getItem(newItem.getId());
             if (item instanceof Artigo && newItem instanceof Artigo) {
@@ -50,7 +50,7 @@ public class Biblioteca implements Serializable {
     }
 
 
-    public void emprestar(int idUsuario, int idItem){
+    public void emprestar(int idUsuario, int idItem) throws Exception{
         ItemBiblioteca item = itens.get(idItem);
         UsuarioBiblioteca usuario = usuarios.get(idUsuario);
 
@@ -75,7 +75,7 @@ public class Biblioteca implements Serializable {
         }
     }
 
-    public void devolver(int idUsuario, int idItem){
+    public void devolver(int idUsuario, int idItem) throws Exception{
         ItemBiblioteca item = itens.get(idItem);
         UsuarioBiblioteca usuario = usuarios.get(idUsuario);
 
@@ -96,7 +96,7 @@ public class Biblioteca implements Serializable {
         }
     }
 
-    public double checkUsuario(int idUsuario){
+    public double checkUsuario(int idUsuario) throws Exception{
         UsuarioBiblioteca usuarioBiblioteca = usuarios.get(idUsuario);
 
         if (usuarioBiblioteca != null) {
@@ -113,7 +113,7 @@ public class Biblioteca implements Serializable {
         }
     }
 
-    public String pagarDivida(int idUsuario){
+    public String pagarDivida(int idUsuario) throws Exception {
         UsuarioBiblioteca usuarioBiblioteca = usuarios.get(idUsuario);
 
         if (usuarioBiblioteca != null) {
