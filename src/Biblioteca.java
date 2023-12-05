@@ -55,7 +55,7 @@ public class Biblioteca implements Serializable {
         UsuarioBiblioteca usuario = usuarios.get(idUsuario);
 
         if (usuario != null) {
-            if (checkUsuario(idUsuario) > 0) {
+            if (checkUsuario(idUsuario) == 0.0f) {
                 if (item != null) {
                     if (item.getQtdDisponiveis() > 0) {
                         item.setQtdEmpretados(item.getQtdEmpretados() + 1);
@@ -80,7 +80,7 @@ public class Biblioteca implements Serializable {
         UsuarioBiblioteca usuario = usuarios.get(idUsuario);
 
         if (usuario != null) {
-            if (checkUsuario(idUsuario) > 0) {
+            if (checkUsuario(idUsuario) == 0.0f) {
                 if (item != null) {
                     item.setQtdEmpretados(item.getQtdEmpretados() - 1);
                     item.setQtdDisponiveis(item.getQtdDisponiveis() + 1);
@@ -100,7 +100,7 @@ public class Biblioteca implements Serializable {
         UsuarioBiblioteca usuarioBiblioteca = usuarios.get(idUsuario);
 
         if (usuarioBiblioteca != null) {
-            double valor = 0;
+            double valor = 0.0f;
             for (Map.Entry<Long, ItemBiblioteca> entry : usuarioBiblioteca.getDataEmprestimos().entrySet()) { //percorre o map de datasEmprestimos do usuario
                 if (entry.getKey() < System.currentTimeMillis()) {
                     float dias = (System.currentTimeMillis() - entry.getKey()) * 86400; //transformando segundos atrasados em dias atrasados

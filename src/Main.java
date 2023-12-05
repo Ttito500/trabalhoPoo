@@ -46,7 +46,7 @@ public class Main {
                 }
             }
             while (menu == 1 && loop) {
-                System.out.println("MENU USUÁRIOS\n\n 1- Adcionar usuario\n 2- Emprestar item\n 3- Devolver item\n 4- show\n 5- Menu itens\n 0- sair");
+                System.out.println("MENU USUÁRIOS\n\n 1- Adcionar usuario\n 2- Emprestar item\n 3- Devolver item\n 4- pagar divida\n 5- show\n 6- Menu itens\n 0- sair");
                 String line = input();
                 String[] args = line.split(" ");
                 if (args[0].equals("0")) {
@@ -58,18 +58,22 @@ public class Main {
                 } else if (args[0].equals("2")) {
                     System.out.print("id do usuário: ");
                     int idUsuario = number(input());
-                    System.out.println("id do item: ");
+                    System.out.print("id do item: ");
                     int idItem = number(input());
                     biblioteca.emprestar(idUsuario, idItem);
                 } else if (args[0].equals("3")) {
                     System.out.print("id do usuário: ");
                     int idUsuario = number(input());
-                    System.out.println("id do item: ");
+                    System.out.print("id do item: ");
                     int idItem = number(input());
                     biblioteca.devolver(idUsuario, idItem);
                 } else if (args[0].equals("4")) {
+                    System.out.print("id do usuário: ");
+                    int idUsuario = number(input());
+                    System.out.println(biblioteca.pagarDivida(idUsuario));
+                }else if (args[0].equals("5")) {
                     System.out.println(biblioteca.showUsuarios());
-                } else if (args[0].equals("5")) {
+                } else if (args[0].equals("6")) {
                     menu--;
                 } else {
                     println("fail: comando invalido");
@@ -105,7 +109,7 @@ public class Main {
 
     public static UsuarioBiblioteca usuario(int id){
         String nome;
-        System.out.println("nome: ");
+        System.out.print("nome: ");
         nome = input();
         return new UsuarioBiblioteca(nome, id);
     }
