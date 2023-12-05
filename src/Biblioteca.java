@@ -1,6 +1,5 @@
 import java.io.Serializable;
 import java.util.*;
-import java.time.LocalDate;
 
 public class Biblioteca implements Serializable {
     private Map<Integer, ItemBiblioteca> itens = new TreeMap<>();
@@ -55,22 +54,25 @@ public class Biblioteca implements Serializable {
         ItemBiblioteca item = itens.get(idItem);
         UsuarioBiblioteca usuario = usuarios.get(idUsuario);
 
-        //if (usuario != null) {
-            if (item != null) {
-                if (item.getQtdDisponiveis() > 0) {
-                    item.setQtdEmpretados(item.getQtdEmpretados() + 1);
-                    item.setQtdDisponiveis(item.getQtdDisponiveis() - 1);
-                    item.setDataEmprestimo(System.currentTimeMillis());
-                    usuario.setEmprestimos(item);
+        if (usuario != null) {
+            if (checkUsuario(idUsuario) > 0) {
+                if (item != null) {
+                    if (item.getQtdDisponiveis() > 0) {
+                        item.setQtdEmpretados(item.getQtdEmpretados() + 1);
+                        item.setQtdDisponiveis(item.getQtdDisponiveis() - 1); //////
+                        usuario.setEmprestimos(item);
+                    } else {
+                        throw new MsgException("fail: item não disponível");
+                    }
                 } else {
-                    throw new MsgException("fail: item não disponível");
+                    throw new MsgException("fail: item não encontrado");
                 }
-            } else {
-                throw new MsgException("fail: item não encontrado");
+            }else {
+                throw new MsgException("fail: " + usuario.getNome() + " deve " + checkUsuario(idUsuario));
             }
-        /*} else {
+        } else {
             throw new MsgException("fail: usuario não encontrado");
-        }*/
+        }
     }
 
     public void devolver(int idUsuario, int idItem){
@@ -78,23 +80,57 @@ public class Biblioteca implements Serializable {
         UsuarioBiblioteca usuario = usuarios.get(idUsuario);
 
         if (usuario != null) {
-            if (item != null) {
-                item.setQtdEmpretados(item.getQtdEmpretados() - 1);
-                item.setQtdDisponiveis(item.getQtdDisponiveis() + 1);
-                usuario.getEmprestimos().remove(item.getId());
+            if (checkUsuario(idUsuario) > 0) {
+                if (item != null) {
+                    item.setQtdEmpretados(item.getQtdEmpretados() - 1);
+                    item.setQtdDisponiveis(item.getQtdDisponiveis() + 1);
+                    usuario.getEmprestimos().remove(item.getId());
+                } else {
+                    throw new MsgException("fail: item não encontrado");
+                }
             } else {
-                throw new MsgException("fail: item não encontrado");
+                throw new MsgException("fail: " + usuario.getNome() + " deve " + checkUsuario(idUsuario));
             }
         } else {
             throw new MsgException("fail: usuario não encontrado");
         }
     }
-/*
-    public float checkUsuario(int idUsuario){
+
+    public double checkUsuario(int idUsuario){
         UsuarioBiblioteca usuarioBiblioteca = usuarios.get(idUsuario);
-        for (ItemBiblioteca item : )
+
+        if (usuarioBiblioteca != null) {
+            double valor = 0;
+            for (Map.Entry<Long, ItemBiblioteca> entry : usuarioBiblioteca.getDataEmprestimos().entrySet()) { //percorre o map de datasEmprestimos do usuario
+                if (entry.getKey() < System.currentTimeMillis()) {
+                    float dias = (System.currentTimeMillis() - entry.getKey()) * 86400; //transformando segundos atrasados em dias atrasados
+                    valor += dias * 2;  //adciona o valor fixo de 2reais ao dia
+                }
+            }
+            return valor;
+        } else {
+            throw new MsgException("fail: usuário não encontrado");
+        }
     }
-*/
+
+    public String pagarDivida(int idUsuario){
+        UsuarioBiblioteca usuarioBiblioteca = usuarios.get(idUsuario);
+
+        if (usuarioBiblioteca != null) {
+            double valor = checkUsuario(idUsuario);
+
+            for (Map.Entry<Long, ItemBiblioteca> entry : usuarioBiblioteca.getDataEmprestimos().entrySet()) { //percorre o map de datasEmprestimos do usuario
+                if (entry.getKey() < System.currentTimeMillis()) { //remove os emprestimos atrasados
+                    usuarioBiblioteca.getDataEmprestimos().remove(entry.getKey());
+                }
+            }
+
+            return usuarioBiblioteca.getNome() + " pagou a divida de " + valor;
+        } else {
+            throw new MsgException("fail: usuário não encontrado");
+        }
+    }
+
     public String showItens() {
         StringBuilder result = new StringBuilder("Biblioteca Contents:\n");
 

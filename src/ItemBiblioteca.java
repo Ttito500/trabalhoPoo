@@ -1,10 +1,9 @@
 import java.io.Serializable;
 
 public abstract class ItemBiblioteca implements Serializable {
-    protected int id;
+    protected final int id;
     protected int qtd;
     protected String titulo;
-    protected long dataEmprestimo;
     protected int qtdDisponiveis, qtdEmpretados, qtdAtrasados;
 
     public ItemBiblioteca(int qtd, String titulo, int id) {
@@ -28,10 +27,6 @@ public abstract class ItemBiblioteca implements Serializable {
         return titulo;
     }
 
-    public long getDataEmprestimo() {
-        return dataEmprestimo;
-    }
-
     public int getQtdDisponiveis() {
         return qtdDisponiveis;
     }
@@ -50,10 +45,6 @@ public abstract class ItemBiblioteca implements Serializable {
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
-    }
-
-    public void setDataEmprestimo(long dataEmprestimo) {
-        this.dataEmprestimo = dataEmprestimo;
     }
 
     public void setQtdDisponiveis(int qtdDisponiveis) {
