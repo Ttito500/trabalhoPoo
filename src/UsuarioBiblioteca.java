@@ -30,7 +30,7 @@ public class UsuarioBiblioteca implements Serializable {
 
     public void setEmprestimos(ItemBiblioteca item) {
         //segundos em um mes
-        long tempoEmprestimo = 2592000L;
+        long tempoEmprestimo = 10L; //2592000L;
 
         if (!emprestimos.containsKey(item.getId())){
             this.emprestimos.put(item.getId(), item);

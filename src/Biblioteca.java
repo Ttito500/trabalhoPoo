@@ -22,7 +22,7 @@ public class Biblioteca implements Serializable {
         }
     }
 
-    public void updateItem(ItemBiblioteca newItem) throws Exception{
+    public void updateItem(ItemBiblioteca newItem) throws MsgException{
         if (itens.containsKey(newItem.getId())) {
             ItemBiblioteca item = getItem(newItem.getId());
             if (item instanceof Artigo && newItem instanceof Artigo) {
@@ -50,7 +50,7 @@ public class Biblioteca implements Serializable {
     }
 
 
-    public void emprestar(int idUsuario, int idItem) throws Exception{
+    public void emprestar(int idUsuario, int idItem) throws MsgException{
         ItemBiblioteca item = itens.get(idItem);
         UsuarioBiblioteca usuario = usuarios.get(idUsuario);
 
@@ -59,7 +59,7 @@ public class Biblioteca implements Serializable {
                 if (item != null) {
                     if (item.getQtdDisponiveis() > 0) {
                         item.setQtdEmpretados(item.getQtdEmpretados() + 1);
-                        item.setQtdDisponiveis(item.getQtdDisponiveis() - 1); //////
+                        item.setQtdDisponiveis(item.getQtdDisponiveis() - 1);
                         usuario.setEmprestimos(item);
                     } else {
                         throw new MsgException("fail: item não disponível");
@@ -75,7 +75,7 @@ public class Biblioteca implements Serializable {
         }
     }
 
-    public void devolver(int idUsuario, int idItem) throws Exception{
+    public void devolver(int idUsuario, int idItem) throws MsgException{
         ItemBiblioteca item = itens.get(idItem);
         UsuarioBiblioteca usuario = usuarios.get(idUsuario);
 
@@ -96,14 +96,14 @@ public class Biblioteca implements Serializable {
         }
     }
 
-    public double checkUsuario(int idUsuario) throws Exception{
+    public double checkUsuario(int idUsuario) throws MsgException{
         UsuarioBiblioteca usuarioBiblioteca = usuarios.get(idUsuario);
 
         if (usuarioBiblioteca != null) {
             double valor = 0.0f;
             for (Map.Entry<Long, ItemBiblioteca> entry : usuarioBiblioteca.getDataEmprestimos().entrySet()) { //percorre o map de datasEmprestimos do usuario
                 if (entry.getKey() < System.currentTimeMillis()) {
-                    float dias = (System.currentTimeMillis() - entry.getKey()) * 86400; //transformando segundos atrasados em dias atrasados
+                    float dias = (float) (System.currentTimeMillis() - entry.getKey()) / 86400000; //transformando segundos atrasados em dias atrasados
                     valor += dias * 2;  //adciona o valor fixo de 2reais ao dia
                 }
             }
@@ -113,7 +113,7 @@ public class Biblioteca implements Serializable {
         }
     }
 
-    public String pagarDivida(int idUsuario) throws Exception {
+    public String pagarDivida(int idUsuario) throws MsgException {
         UsuarioBiblioteca usuarioBiblioteca = usuarios.get(idUsuario);
 
         if (usuarioBiblioteca != null) {
@@ -121,7 +121,13 @@ public class Biblioteca implements Serializable {
 
             for (Map.Entry<Long, ItemBiblioteca> entry : usuarioBiblioteca.getDataEmprestimos().entrySet()) { //percorre o map de datasEmprestimos do usuario
                 if (entry.getKey() < System.currentTimeMillis()) { //remove os emprestimos atrasados
+                    Map<Integer, ItemBiblioteca> emprestimos = usuarioBiblioteca.getEmprestimos();
+                    int idEntry = entry.getValue().getId();
+
                     usuarioBiblioteca.getDataEmprestimos().remove(entry.getKey());
+                    emprestimos.get(idEntry).setQtdDisponiveis(emprestimos.get(idEntry).getQtdDisponiveis() + 1); // volta a qtd de disponiveis
+                    emprestimos.get(idEntry).setQtdDisponiveis(emprestimos.get(idEntry).getQtdEmpretados() - 1); // diminui qtd emprestados
+                    emprestimos.remove(idEntry);
                 }
             }
 
