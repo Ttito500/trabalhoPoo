@@ -4,11 +4,14 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] arg) {
         Biblioteca biblioteca = loadData(); // carrega os dados se existirem
-        if (biblioteca == null) {
-            biblioteca = new Biblioteca();
-        }
         int keyItem = 0;
         int keyUsuario = 0;
+        if (biblioteca == null) {
+            biblioteca = new Biblioteca();
+        } else {
+            keyItem = biblioteca.ultimoIdItens();
+            keyUsuario = biblioteca.ultimoIdUsuarios();
+        }
         int menu = 0;
         boolean loop = true;
         while (loop) {

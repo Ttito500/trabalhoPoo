@@ -137,6 +137,30 @@ public class Biblioteca implements Serializable {
         }
     }
 
+    public int ultimoIdItens(){
+        int maxKey = Integer.MIN_VALUE;
+
+        for (int key : usuarios.keySet()) {
+            if (key > maxKey) {
+                maxKey = key;
+            }
+        }
+
+        return maxKey;
+    }
+
+    public int ultimoIdUsuarios(){
+        int maxKey = Integer.MIN_VALUE;
+
+        for (int key : itens.keySet()) {
+            if (key > maxKey) {
+                maxKey = key;
+            }
+        }
+
+        return maxKey;
+    }
+
     public String showItens() {
         StringBuilder result = new StringBuilder();
 
