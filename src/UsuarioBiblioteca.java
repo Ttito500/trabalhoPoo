@@ -40,7 +40,7 @@ public class UsuarioBiblioteca implements Serializable {
             long dataDevolucao = System.currentTimeMillis() + tempoEmprestimo;
             setDataEmprestimos(dataDevolucao, item);
         } else {
-            throw new MsgException("fail: item já emprestado à" + nome);
+            throw new MsgException("fail: item já emprestado à " + nome);
         }
     }
 

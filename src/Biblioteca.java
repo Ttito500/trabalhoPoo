@@ -57,12 +57,16 @@ public class Biblioteca implements Serializable {
         if (usuario != null) {
             if (checkUsuario(idUsuario) == 0.0f) {
                 if (item != null) {
-                    if (item.getQtdDisponiveis() > 0) {
-                        item.setQtdEmpretados(item.getQtdEmpretados() + 1);
-                        item.setQtdDisponiveis(item.getQtdDisponiveis() - 1);
-                        usuario.setEmprestimos(item);
+                    if (!usuario.getEmprestimos().containsKey(idItem)) {
+                        if (item.getQtdDisponiveis() > 0) {
+                            item.setQtdEmpretados(item.getQtdEmpretados() + 1);
+                            item.setQtdDisponiveis(item.getQtdDisponiveis() - 1);
+                            usuario.setEmprestimos(item);
+                        } else {
+                            throw new MsgException("fail: item não disponível");
+                        }
                     } else {
-                        throw new MsgException("fail: item não disponível");
+                        throw new MsgException("fail: item já emprestado à " + usuario.getNome());
                     }
                 } else {
                     throw new MsgException("fail: item não encontrado");
@@ -107,7 +111,11 @@ public class Biblioteca implements Serializable {
                     valor += dias * 2;  //adciona o valor fixo de 2reais ao dia
                 }
             }
-            return valor;
+            if (valor < 2){  // ignora dividas insignificantes
+                return 0.0f;
+            } else {
+                return valor;
+            }
         } else {
             throw new MsgException("fail: usuário não encontrado");
         }
@@ -126,7 +134,7 @@ public class Biblioteca implements Serializable {
 
                     usuarioBiblioteca.getDataEmprestimos().remove(entry.getKey());
                     emprestimos.get(idEntry).setQtdDisponiveis(emprestimos.get(idEntry).getQtdDisponiveis() + 1); // volta a qtd de disponiveis
-                    emprestimos.get(idEntry).setQtdDisponiveis(emprestimos.get(idEntry).getQtdEmpretados() - 1); // diminui qtd emprestados
+                    emprestimos.get(idEntry).setQtdEmpretados(emprestimos.get(idEntry).getQtdEmpretados() - 1); // diminui qtd emprestados
                     emprestimos.remove(idEntry);
                 }
             }
