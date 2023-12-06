@@ -4,14 +4,13 @@ public abstract class ItemBiblioteca implements Serializable {
     protected final int id;
     protected int qtd;
     protected String titulo;
-    protected int qtdDisponiveis, qtdEmpretados, qtdAtrasados;
+    protected int qtdDisponiveis, qtdEmpretados;
 
     public ItemBiblioteca(int qtd, String titulo, int id) {
         this.qtd = qtd;
         this.titulo = titulo;
         this.id = id;
         this.qtdDisponiveis = qtd;
-        this.qtdAtrasados = 0;
         this.qtdEmpretados = 0;
     }
 
@@ -35,10 +34,6 @@ public abstract class ItemBiblioteca implements Serializable {
         return qtdEmpretados;
     }
 
-    public int getQtdAtrasados() {
-        return qtdAtrasados;
-    }
-
     public void setQtd(int qtd) {
         this.qtd = qtd;
     }
@@ -55,7 +50,4 @@ public abstract class ItemBiblioteca implements Serializable {
         this.qtdEmpretados = qtdEmpretados;
     }
 
-    public void setQtdAtrasados(int qtdAtrasados) {
-        this.qtdAtrasados = qtdAtrasados;
-    }
 }

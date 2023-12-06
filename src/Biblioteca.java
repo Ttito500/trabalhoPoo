@@ -138,7 +138,7 @@ public class Biblioteca implements Serializable {
     }
 
     public String showItens() {
-        StringBuilder result = new StringBuilder("Biblioteca Contents:\n");
+        StringBuilder result = new StringBuilder();
 
         for (ItemBiblioteca item : itens.values()) {
             result.append(item.toString()).append("\n");
@@ -148,7 +148,7 @@ public class Biblioteca implements Serializable {
     }
 
     public String showUsuarios(){
-        StringBuilder result = new StringBuilder("Biblioteca Contents:\n");
+        StringBuilder result = new StringBuilder();
 
         for (UsuarioBiblioteca usuario : usuarios.values()) {
             result.append(usuario.toString()).append("\n");

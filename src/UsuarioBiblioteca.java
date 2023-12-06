@@ -1,4 +1,6 @@
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -64,10 +66,21 @@ public class UsuarioBiblioteca implements Serializable {
 
     @Override
     public String toString() {
-        return "UsuarioBiblioteca{" +
-                "nome='" + nome + '\'' +
-                ", idUsuario=" + idUsuario +
-                ", dataEmprestimos=" + dataEmprestimos +
-                '}';
+        StringBuilder stringBuilder = new StringBuilder("Usuário:\n");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
+
+        stringBuilder.append("IDusr: ").append(idUsuario);
+        stringBuilder.append(", Nome: ").append(nome).append("\n\n");
+        stringBuilder.append("Emprestimos:\n");
+
+        for (Map.Entry<Long, ItemBiblioteca> entry : dataEmprestimos.entrySet()) {
+            stringBuilder.append("ID: ").append(entry.getValue().getId());
+            stringBuilder.append(", Título: ").append(entry.getValue().getTitulo());
+
+            Date dataDevolucao = new Date(entry.getKey());
+            stringBuilder.append(", devolução: ").append(dateFormat.format(dataDevolucao)).append("\n");
+        }
+
+        return stringBuilder.toString();
     }
 }
