@@ -180,15 +180,15 @@ public class Biblioteca implements Serializable {
     }
 
     public int ultimoIdItens(){
-        int maxKey = Integer.MIN_VALUE;
+        int maxKey = 0;
 
-        for (int key : usuarios.keySet()) {
+        for (int key : itens.keySet()) {
             if (key > maxKey) {
                 maxKey = key;
             }
         }
 
-        return maxKey;
+        return maxKey + 1;
     }
 
     public long keyDataEmprestimo(int idUsuario, int idItem) {
@@ -205,7 +205,7 @@ public class Biblioteca implements Serializable {
         return key;
     }
     public int ultimoIdUsuarios(){
-        int maxKey = Integer.MIN_VALUE;
+        int maxKey = 0;
 
         for (int key : itens.keySet()) {
             if (key > maxKey) {
@@ -213,7 +213,7 @@ public class Biblioteca implements Serializable {
             }
         }
 
-        return maxKey;
+        return maxKey + 1;
     }
 
     public String showItens() {
