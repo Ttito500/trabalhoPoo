@@ -61,7 +61,7 @@ public class Main {
                 }
             }
             while (menu == 1 && loop) {
-                System.out.println("MENU USUÁRIOS\n\n 1- Adcionar usuario\n 2- Emprestar item\n 3- Devolver item\n 4- pagar divida\n 5- show\n 6- Menu itens\n 0- sair");
+                System.out.println("MENU USUÁRIOS\n\n 1- Adcionar usuario\n 2- Emprestar item\n 3- Devolver item\n 4- pagar divida\n 5- show\n 6- Menu itens\n 7- Adiar devolução\n 0- sair");
                 String line = input();
                 String[] args = line.split(" ");
                 if (args[0].equals("0")) {
@@ -102,6 +102,18 @@ public class Main {
                     System.out.println(biblioteca.showUsuarios());
                 } else if (args[0].equals("6")) {
                     menu--;
+                }else if (args[0].equals("7")) {
+                    System.out.print("id do usuário: ");
+                    int idUsuario = number(input());
+                    System.out.print("id do item: ");
+                    int idItem = number(input());
+                    biblioteca.adiarEmprestimo(idUsuario, idItem);
+                }else if (args[0].equals("9")) {
+                    System.out.print("id do usuário: ");
+                    int idUsuario = number(input());
+                    System.out.print("id do item: ");
+                    int idItem = number(input());
+                    biblioteca.testDebito(idUsuario, idItem);
                 } else {
                     println("fail: comando invalido");
                 }

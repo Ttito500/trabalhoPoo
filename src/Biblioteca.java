@@ -16,7 +16,11 @@ public class Biblioteca implements Serializable {
 
     public void deleteItem(int id) throws Exception{
         if (itens.containsKey(id)) {
-            itens.remove(id);
+            if (itens.get(id).getQtdDisponiveis() == itens.get(id).getQtd()) {
+                itens.remove(id);
+            }else {
+                throw new MsgException("fail: finalize os emprestimos antes de excluir");
+            }
         } else {
             throw new MsgException("fail: item não encontrado");
         }
@@ -89,6 +93,7 @@ public class Biblioteca implements Serializable {
                     item.setQtdEmpretados(item.getQtdEmpretados() - 1);
                     item.setQtdDisponiveis(item.getQtdDisponiveis() + 1);
                     usuario.getEmprestimos().remove(item.getId());
+                    usuario.getDataEmprestimos().remove(keyDataEmprestimo(idUsuario, idItem)); //encontrar o item pelo id
                 } else {
                     throw new MsgException("fail: item não encontrado");
                 }
@@ -145,6 +150,35 @@ public class Biblioteca implements Serializable {
         }
     }
 
+    public void adiarEmprestimo(int idUsuario, int idItem) throws MsgException{
+        UsuarioBiblioteca usuarioBiblioteca = usuarios.get(idUsuario);
+
+        if (usuarioBiblioteca != null) {
+            if (itens.get(idItem) != null) {
+                long data = keyDataEmprestimo(idUsuario, idItem);
+                ItemBiblioteca item = itens.get(idItem);
+
+                usuarioBiblioteca.setDataEmprestimos(data + (30L * 24 * 60 * 60 * 1000), item);
+                //usuarioBiblioteca.getDataEmprestimos().remove(data);
+                //usuarioBiblioteca.getDataEmprestimos().put(data + 2592000, item);
+            } else {
+                throw new MsgException("fail: item não encontrado");
+            }
+        } else {
+            throw new MsgException("fail: usuário não encontrado");
+        }
+    }
+
+    public void testDebito(int idUsuario, int idItem){ // so para testes
+        UsuarioBiblioteca usuarioBiblioteca = usuarios.get(idUsuario);
+
+        long data = keyDataEmprestimo(idUsuario, idItem);
+        ItemBiblioteca item = itens.get(idItem);
+
+        usuarioBiblioteca.getDataEmprestimos().remove(data);
+        usuarioBiblioteca.getDataEmprestimos().put(data - (30L * 24 * 60 * 60 * 1000), item);
+    }
+
     public int ultimoIdItens(){
         int maxKey = Integer.MIN_VALUE;
 
@@ -157,6 +191,19 @@ public class Biblioteca implements Serializable {
         return maxKey;
     }
 
+    public long keyDataEmprestimo(int idUsuario, int idItem) {
+        ItemBiblioteca item = itens.get(idItem);
+        UsuarioBiblioteca usuario = usuarios.get(idUsuario);
+        long key = 0;
+
+        for (Map.Entry<Long, ItemBiblioteca> entry : usuario.getDataEmprestimos().entrySet()) {
+            if (entry.getValue().getId() == idItem) {
+                key = entry.getKey();
+            }
+        }
+
+        return key;
+    }
     public int ultimoIdUsuarios(){
         int maxKey = Integer.MIN_VALUE;
 
